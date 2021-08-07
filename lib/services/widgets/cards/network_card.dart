@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/utils/network_type.dart';
-import 'package:network_arch/widgets/builders.dart';
-import 'package:network_arch/widgets/cards/data_card.dart';
-import 'package:network_arch/widgets/data_line.dart';
+import 'package:network_arch/services/utils/network_type.dart';
+import 'package:network_arch/services/widgets/builders.dart';
+import 'package:network_arch/services/widgets/cards/data_card.dart';
+import 'package:network_arch/services/widgets/data_line.dart';
 
 class NetworkCard extends StatelessWidget {
   const NetworkCard({
