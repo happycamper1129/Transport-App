@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -20,9 +21,20 @@ class WifiDetailedView extends StatelessWidget {
   }
 
   Widget _buildIOS(BuildContext context) {
-    return CupertinoContentScaffold(
-      largeTitle: const Text('Wi-Fi Details'),
-      child: _buildDataList(context),
+    return CupertinoPageScaffold(
+      child: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) =>
+            [
+          const CupertinoSliverNavigationBar(
+            stretch: true,
+            border: null,
+            largeTitle: Text(
+              'Wi-Fi Details',
+            ),
+          ),
+        ],
+        body: _buildDataList(context),
+      ),
     );
   }
 

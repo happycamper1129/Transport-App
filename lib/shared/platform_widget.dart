@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// A simple widget that builds different things on different platforms.
@@ -16,7 +17,7 @@ class PlatformWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    switch (Theme.of(context).platform) {
+    switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return androidBuilder?.call(context) ?? const SizedBox.shrink();
       case TargetPlatform.iOS:

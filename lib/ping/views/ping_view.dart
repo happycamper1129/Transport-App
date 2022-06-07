@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -94,7 +95,7 @@ class _PingViewState extends State<PingView> {
         onStopPressed: _handleStop,
         key: _appBarKey,
       ),
-      body: _buildBody(context),
+      body: _buildBody(),
       floatingActionButton: _isFabVisible
           ? FloatingActionButton(
               child: const Icon(Icons.arrow_upward_rounded),
@@ -111,31 +112,35 @@ class _PingViewState extends State<PingView> {
   }
 
   Widget _buildIOS(BuildContext context) {
-    return CupertinoContentScaffold(
-      customHeader: BlocBuilder<PingBloc, PingState>(
-        builder: (context, state) {
-          return state is PingRunNewData
-              ? CupertinoActionAppBar(
-                  context,
-                  title: 'Ping',
-                  action: ButtonAction.stop,
-                  isActive: _shouldStartButtonBeActive,
-                  onPressed: _handleStop,
-                )
-              : CupertinoActionAppBar(
-                  context,
-                  title: 'Ping',
-                  action: ButtonAction.start,
-                  isActive: _shouldStartButtonBeActive,
-                  onPressed: _handleStart,
-                );
-        },
+    return CupertinoPageScaffold(
+      child: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          BlocBuilder<PingBloc, PingState>(
+            builder: (context, state) {
+              return state is PingRunNewData
+                  ? CupertinoActionAppBar(
+                      context,
+                      title: 'Ping',
+                      action: ButtonAction.stop,
+                      isActive: _shouldStartButtonBeActive,
+                      onPressed: _handleStop,
+                    )
+                  : CupertinoActionAppBar(
+                      context,
+                      title: 'Ping',
+                      action: ButtonAction.start,
+                      isActive: _shouldStartButtonBeActive,
+                      onPressed: _handleStart,
+                    );
+            },
+          ),
+        ],
+        body: _buildBody(),
       ),
-      child: _buildBody(context),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return ContentListView(
       scrollController: _scrollController,
       children: [

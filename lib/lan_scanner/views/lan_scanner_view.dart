@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 // Dart imports:
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -11,7 +14,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
 import 'package:network_arch/lan_scanner/widgets/host_card.dart';
 import 'package:network_arch/models/animated_list_model.dart';
-import 'package:network_arch/shared/shared.dart';
+import 'package:network_arch/shared/action_app_bar.dart';
+import 'package:network_arch/shared/content_list_view.dart';
+import 'package:network_arch/shared/cupertino_action_app_bar.dart';
+import 'package:network_arch/shared/shared_widgets.dart';
 
 class LanScannerView extends StatefulWidget {
   const LanScannerView({Key? key}) : super(key: key);
@@ -61,37 +67,41 @@ class _LanScannerViewState extends State<LanScannerView> {
         onStopPressed: _handleStop,
         key: _appBarKey,
       ),
-      body: _buildBody(context),
+      body: _buildBody(),
     );
   }
 
   Widget _buildIOS(BuildContext context) {
-    return CupertinoContentScaffold(
-      customHeader: BlocBuilder<LanScannerBloc, LanScannerState>(
-        builder: (context, state) {
-          return state is LanScannerRunStart ||
-                  state is LanScannerRunProgressUpdate
-              ? CupertinoActionAppBar(
-                  context,
-                  title: 'LAN Scanner',
-                  action: ButtonAction.stop,
-                  isActive: true,
-                  onPressed: _handleStop,
-                )
-              : CupertinoActionAppBar(
-                  context,
-                  title: 'LAN Scanner',
-                  action: ButtonAction.start,
-                  isActive: true,
-                  onPressed: _handleStart,
-                );
-        },
+    return CupertinoPageScaffold(
+      child: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          BlocBuilder<LanScannerBloc, LanScannerState>(
+            builder: (context, state) {
+              return state is LanScannerRunStart ||
+                      state is LanScannerRunProgressUpdate
+                  ? CupertinoActionAppBar(
+                      context,
+                      title: 'Ping',
+                      action: ButtonAction.stop,
+                      isActive: true,
+                      onPressed: _handleStop,
+                    )
+                  : CupertinoActionAppBar(
+                      context,
+                      title: 'Ping',
+                      action: ButtonAction.start,
+                      isActive: true,
+                      onPressed: _handleStart,
+                    );
+            },
+          ),
+        ],
+        body: _buildBody(),
       ),
-      child: _buildBody(context),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return ContentListView(
       children: [
         BlocConsumer<LanScannerBloc, LanScannerState>(
@@ -169,9 +179,6 @@ class _LanScannerViewState extends State<LanScannerView> {
   Future<void> _handleStart() async {
     await _hosts.removeAllElements(context);
 
-    if (!mounted) {
-      return;
-    }
     context.read<LanScannerBloc>().add(LanScannerStarted());
 
     await Future.delayed(Duration.zero);

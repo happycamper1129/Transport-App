@@ -62,31 +62,40 @@ class _DnsLookupViewState extends State<DnsLookupView> {
           ),
         ],
       ),
-      body: _buildBody(context),
+      body: _buildBody(),
     );
   }
 
   Widget _buildIOS(BuildContext context) {
-    return CupertinoContentScaffold(
-      largeTitle: const Text('DNS Lookup'),
-      navBarTrailingWidget: CupertinoButton(
-        padding: EdgeInsets.zero,
-        onPressed: _handleCheck,
-        child: Text(
-          'Check',
-          style: TextStyle(
-            color: CupertinoDynamicColor.resolve(
-              CupertinoColors.activeGreen,
-              context,
+    return CupertinoPageScaffold(
+      child: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+            CupertinoSliverNavigationBar(
+              largeTitle: const Text('DNS Lookup'),
+              border: null,
+              trailing: CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: _handleCheck,
+                child: Text(
+                  'Check',
+                  style: TextStyle(
+                    color: CupertinoDynamicColor.resolve(
+                      CupertinoColors.activeGreen,
+                      context,
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
+          ];
+        },
+        body: _buildBody(),
       ),
-      child: _buildBody(context),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return ContentListView(
       children: [
         IntrinsicHeight(

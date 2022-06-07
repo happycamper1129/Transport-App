@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:network_arch/network_status/network_status.dart';
-import 'package:network_arch/theme/themes.dart';
 
 class ConnectionStatus extends StatelessWidget {
   const ConnectionStatus(
@@ -29,8 +28,8 @@ class ConnectionStatus extends StatelessWidget {
               isNetworkConnected ? 'Connected' : 'Disconnected',
               style: TextStyle(
                 color: isNetworkConnected
-                    ? Themes.getPlatformSuccessColor(context)
-                    : Themes.getPlatformErrorColor(context),
+                    ? Colors.green
+                    : Theme.of(context).colorScheme.error,
                 fontWeight: FontWeight.bold,
                 fontSize: 16.0,
               ),
@@ -40,8 +39,8 @@ class ConnectionStatus extends StatelessWidget {
               isNetworkConnected ? Icons.check_circle : Icons.cancel,
               size: iconSize,
               color: isNetworkConnected
-                  ? Themes.getPlatformSuccessColor(context)
-                  : Themes.getPlatformErrorColor(context),
+                  ? Colors.green
+                  : Theme.of(context).colorScheme.error,
             ),
           ],
         );

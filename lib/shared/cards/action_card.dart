@@ -10,7 +10,7 @@ import 'package:network_arch/shared/shared_widgets.dart';
 class ActionCard extends StatelessWidget {
   const ActionCard({
     required this.title,
-    this.desc,
+    required this.desc,
     this.icon,
     this.buttonStyle,
     this.onTap,
@@ -18,7 +18,7 @@ class ActionCard extends StatelessWidget {
   }) : super(key: key);
 
   final String title;
-  final String? desc;
+  final String desc;
   final IconData? icon;
   final ButtonStyle? buttonStyle;
   final VoidCallback? onTap;
@@ -46,14 +46,13 @@ class ActionCard extends StatelessWidget {
                     fontSize: 20.0,
                   ),
                 ),
-                if (desc != null)
-                  Text(
-                    desc!,
-                    maxLines: 2,
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.caption?.color,
-                    ),
+                Text(
+                  desc,
+                  maxLines: 2,
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.caption?.color,
                   ),
+                ),
               ],
             ),
           ),
