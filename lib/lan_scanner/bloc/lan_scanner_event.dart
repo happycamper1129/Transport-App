@@ -16,7 +16,7 @@ class LanScannerProgressUpdated extends LanScannerEvent {
 class LanScannerHostFound extends LanScannerEvent {
   LanScannerHostFound(this.host);
 
-  final ActiveHost host;
+  final HostModel host;
 }
 
 class LanScannerStopped extends LanScannerEvent {

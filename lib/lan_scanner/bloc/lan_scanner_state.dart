@@ -31,7 +31,7 @@ class LanScannerRunProgressUpdate extends LanScannerState {
 class LanScannerRunNewHost extends LanScannerState {
   const LanScannerRunNewHost(this.host);
 
-  final ActiveHost host;
+  final HostModel host;
 
   @override
   List<Object> get props => [host.ip];
